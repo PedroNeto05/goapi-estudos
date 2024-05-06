@@ -9,7 +9,7 @@ var (
 	logger *config.Logger
 )
 
-func InitializeTaskControler() {
+func InitializeTaskController() {
 	logger = config.GetLogger("TaskController")
 
 	taskusecase.InitializeTaskUseCase()
