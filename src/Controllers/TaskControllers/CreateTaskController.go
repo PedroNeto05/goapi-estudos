@@ -1,8 +1,8 @@
 package taskcontrollers
 
 import (
-	"fmt"
 	models "goApi/src/Models"
+	taskusecase "goApi/src/UseCase/TaskUseCase"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -12,12 +12,21 @@ func CreateTaskController(c *fiber.Ctx) error {
 
 	err := c.BodyParser(&myJson)
 
-	fmt.Printf("%T", myJson)
-
-	// err = taskusecase.CreateTaskUseCase()
 	if err != nil {
+		logger.Errorf("Erro ao fazer o parse das informações: %v", err)
+		c.SendStatus(fiber.StatusInternalServerError)
 		return c.JSON(fiber.Map{
-			"error": err,
+			"error": err.Error(),
+		})
+
+	}
+	err = taskusecase.CreateTaskUseCase(&myJson)
+
+	if err != nil {
+		logger.Errorf("Erro de validação: %v", err)
+		c.SendStatus(fiber.StatusBadRequest)
+		return c.JSON(fiber.Map{
+			"error": err.Error(),
 		})
 	}
 
