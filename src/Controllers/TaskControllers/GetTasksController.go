@@ -1,7 +1,14 @@
 package taskcontrollers
 
-import "github.com/gofiber/fiber/v2"
+import (
+	taskusecase "goApi/src/UseCase/TaskUseCase"
+
+	"github.com/gofiber/fiber/v2"
+)
 
 func GetTasksController(c *fiber.Ctx) error {
-	return c.JSON(fiber.Map{"success": "INDEX"})
+
+	tasks := taskusecase.GetTasksUseCase()
+
+	return c.JSON(fiber.Map{"takss": tasks})
 }
