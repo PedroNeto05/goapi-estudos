@@ -2,6 +2,7 @@ package taskusecase
 
 import (
 	"goApi/config"
+	taskrepository "goApi/src/Repositories/TaskRepository"
 
 	"gorm.io/gorm"
 )
@@ -14,4 +15,5 @@ var (
 func InitializeTaskUseCase() {
 	logger = config.GetLogger("UseCase")
 	db, _ = config.InitializeMysql()
+	taskrepository.InitializeTaskRepository()
 }
