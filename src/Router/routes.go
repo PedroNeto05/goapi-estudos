@@ -10,6 +10,7 @@ func initializeRoutes(router *fiber.App) {
 
 	v1 := router.Group("/api/v1")
 	tasks := v1.Group("/tasks")
+	taskcontrollers.InitializeTaskController()
 	{
 		// CREATE TASKS
 		tasks.Post("/", taskcontrollers.CreateTaskController)
