@@ -23,7 +23,7 @@ func CreateTaskController(c *fiber.Ctx) error {
 	err = taskusecase.CreateTaskUseCase(&myJson)
 
 	if err != nil {
-		logger.Errorf("Erro de validação: %v", err)
+		logger.Errorf("Erro na criação da tarefa: %v", err)
 		c.SendStatus(fiber.StatusBadRequest)
 		return c.JSON(fiber.Map{
 			"error": err.Error(),
