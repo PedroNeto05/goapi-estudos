@@ -9,7 +9,7 @@ import (
 type Task struct {
 	gorm.Model
 	Title       string `json:"title"`
-	Description string `json:"descripiton"`
+	Description string `json:"description"`
 }
 
 type TaskResponse struct {
