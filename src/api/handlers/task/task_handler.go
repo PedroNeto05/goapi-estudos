@@ -10,7 +10,7 @@ var (
 )
 
 func InitializeTaskHandler() {
-	logger = utils.GetLogger("TaskController")
+	logger = utils.GetLogger("task_handler")
 
 	taskusecase.InitializeTaskUseCase()
 }
