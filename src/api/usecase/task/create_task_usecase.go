@@ -3,7 +3,7 @@ package taskusecase
 import (
 	"fmt"
 
-	taskrepository "goApi/api/repositories/TaskRepository"
+	taskrepository "goApi/api/repositories/task"
 	"goApi/db/models"
 )
 

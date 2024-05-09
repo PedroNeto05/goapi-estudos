@@ -1,7 +1,7 @@
 package taskusecase
 
 import (
-	taskrepository "goApi/api/repositories/TaskRepository"
+	taskrepository "goApi/api/repositories/task"
 	"goApi/db/mysql"
 	"goApi/utils"
 
