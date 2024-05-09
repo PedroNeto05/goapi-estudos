@@ -2,8 +2,8 @@ package taskrepository
 
 import "goApi/db/models"
 
-func CreateTaskRepository(t *models.Task) error {
-	err := db.Create(t).Error
+func CreateTaskRepository(task *models.Task) error {
+	err := db.Create(task).Error
 
 	if err != nil {
 		return err
