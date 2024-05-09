@@ -8,9 +8,9 @@ import (
 )
 
 func CreateTaskHandler(c *fiber.Ctx) error {
-	var myJson models.Task
+	var task models.Task
 
-	err := c.BodyParser(&myJson)
+	err := c.BodyParser(&task)
 
 	if err != nil {
 		logger.Errorf("Erro ao fazer o parse das informações: %v", err)
@@ -20,7 +20,7 @@ func CreateTaskHandler(c *fiber.Ctx) error {
 		})
 
 	}
-	err = taskusecase.CreateTaskUseCase(&myJson)
+	err = taskusecase.CreateTaskUseCase(&task)
 
 	if err != nil {
 		logger.Errorf("Erro na criação da tarefa: %v", err)
