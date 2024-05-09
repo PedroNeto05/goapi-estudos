@@ -33,12 +33,8 @@ func InitializeMysql() (*gorm.DB, error) {
 		return nil, err
 	}
 
-	err = db.AutoMigrate(&models.Task{})
-
-	if err != nil {
-		logger.Errorf("Erro ao fazer as migrações: %v", err)
-		return nil, err
-	}
+	db.AutoMigrate(&models.Task{})
+	db.AutoMigrate(&models.User{})
 
 	return db, nil
 }
