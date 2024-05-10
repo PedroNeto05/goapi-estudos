@@ -5,12 +5,14 @@ import (
 	"goApi/db/models"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func CreateUserHandler(c *fiber.Ctx) error {
-	var user *models.User
+	var userRequest *models.User
 
-	err := c.BodyParser(&user)
+	err := c.BodyParser(&userRequest)
 
 	if err != nil {
 		logger.Errorf("Erro ao fazer o parse das informações: %v", err)
@@ -20,7 +22,25 @@ func CreateUserHandler(c *fiber.Ctx) error {
 		})
 	}
 
-	err = userusecase.CreateUserUseCase(user)
+	password, err := hashPassword(userRequest.Password)
+
+	if err != nil {
+		logger.Errorf("Erro ao fazer o hash da senha: %v", err)
+		c.SendStatus(fiber.StatusInternalServerError)
+		return c.JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	user := models.User{
+		ID:       uuid.New(),
+		Name:     userRequest.Name,
+		LastName: userRequest.LastName,
+		Email:    userRequest.Email,
+		Password: password,
+	}
+
+	err = userusecase.CreateUserUseCase(&user)
 
 	if err != nil {
 		logger.Errorf("Erro na criação do usuario: %v", err)
@@ -31,4 +51,9 @@ func CreateUserHandler(c *fiber.Ctx) error {
 	}
 
 	return c.SendStatus(fiber.StatusOK)
+}
+
+func hashPassword(password string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+	return string(bytes), err
 }
