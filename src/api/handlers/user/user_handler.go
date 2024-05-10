@@ -1,6 +1,7 @@
 package userhandler
 
 import (
+	userusecase "goApi/api/usecase/user"
 	"goApi/utils"
 )
 
@@ -10,4 +11,5 @@ var (
 
 func InitializeUserHandler() {
 	logger = utils.GetLogger("user_handler")
+	userusecase.InitializeUserUseCase()
 }
