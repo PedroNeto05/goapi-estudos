@@ -8,9 +8,14 @@ import (
 )
 
 func CreateTaskHandler(c *fiber.Ctx) error {
-	var task *models.Task
+	var taskRequest *models.Task
 
-	err := c.BodyParser(&task)
+	err := c.BodyParser(&taskRequest)
+
+	task := models.Task{
+		Title:       taskRequest.Title,
+		Description: taskRequest.Description,
+	}
 
 	if err != nil {
 		logger.Errorf("Erro ao fazer o parse das informações: %v", err)
@@ -20,7 +25,7 @@ func CreateTaskHandler(c *fiber.Ctx) error {
 		})
 
 	}
-	err = taskusecase.CreateTaskUseCase(task)
+	err = taskusecase.CreateTaskUseCase(&task)
 
 	if err != nil {
 		logger.Errorf("Erro na criação da tarefa: %v", err)
