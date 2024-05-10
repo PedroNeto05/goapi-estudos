@@ -10,5 +10,5 @@ func GetTasksHandler(c *fiber.Ctx) error {
 
 	tasks := taskusecase.GetTasksUseCase()
 
-	return c.JSON(fiber.Map{"takss": tasks})
+	return c.JSON(fiber.Map{"tasks": tasks})
 }
