@@ -1,14 +1,19 @@
 package taskrepository
 
-import "goApi/db/models"
+import (
+	"errors"
+	"goApi/db/models"
+
+	"gorm.io/gorm"
+)
 
 func GetTaskByTitleRepository(title string) (*models.Task, error) {
-	var task *models.Task
+	var task models.Task
+	err := db.Where("title = ?", title).First(&task).Error
 
-	err := db.Where("title = ?", title).First(task).Error
-
-	if err != nil {
-		return task, err
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return nil, err
 	}
-	return task, nil
+
+	return &task, nil
 }
