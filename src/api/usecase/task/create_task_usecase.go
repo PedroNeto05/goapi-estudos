@@ -16,6 +16,7 @@ func CreateTaskUseCase(task *models.Task) error {
 	if err != nil {
 		return err
 	}
+
 	taskAlreadyExist, err := taskrepository.GetTaskByTitleRepository(task.Title)
 
 	if !(errors.Is(err, gorm.ErrRecordNotFound)) && err != nil {
