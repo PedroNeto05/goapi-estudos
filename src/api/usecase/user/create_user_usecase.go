@@ -15,7 +15,6 @@ func CreateUserUseCase(user *models.User) error {
 	if err != nil {
 		return err
 	}
-
 	userAlreadyExist, err := userrepository.GetUserByEmail(user.Email)
 
 	if !(errors.Is(err, gorm.ErrRecordNotFound)) && err != nil {
@@ -23,8 +22,10 @@ func CreateUserUseCase(user *models.User) error {
 	}
 
 	if userAlreadyExist != nil {
-		return errors.New("a tarefa já existe")
+		return errors.New("o usuario já existe")
 	}
+
+	userrepository.CreateUserRepository(user)
 	return nil
 }
 
