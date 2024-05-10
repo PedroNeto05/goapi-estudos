@@ -10,7 +10,7 @@ import (
 func CreateTaskHandler(c *fiber.Ctx) error {
 	var task *models.Task
 
-	err := c.BodyParser(task)
+	err := c.BodyParser(&task)
 
 	if err != nil {
 		logger.Errorf("Erro ao fazer o parse das informações: %v", err)

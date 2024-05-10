@@ -1,6 +1,8 @@
 package taskrepository
 
-import "goApi/db/models"
+import (
+	"goApi/db/models"
+)
 
 func CreateTaskRepository(task *models.Task) error {
 	err := db.Create(task).Error

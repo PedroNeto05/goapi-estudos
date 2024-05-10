@@ -1,10 +1,12 @@
 package taskusecase
 
 import (
-	"fmt"
+	"errors"
 
 	taskrepository "goApi/api/repositories/task"
 	"goApi/db/models"
+
+	"gorm.io/gorm"
 )
 
 func CreateTaskUseCase(task *models.Task) error {
@@ -12,23 +14,22 @@ func CreateTaskUseCase(task *models.Task) error {
 	err := isAValidTask(task)
 
 	if err != nil {
-		return fmt.Errorf(" %v", err)
+		return err
 	}
-
 	taskAlreadyExist, err := taskrepository.GetTaskByTitleRepository(task.Title)
 
-	if err != nil {
-		return fmt.Errorf("%v", err)
+	if !(errors.Is(err, gorm.ErrRecordNotFound)) && err != nil {
+		return err
 	}
 
-	if taskAlreadyExist != (&models.Task{}) {
-		return fmt.Errorf("a tarefa ja existe")
+	if taskAlreadyExist != nil {
+		return errors.New("a tarefa já existe")
 	}
 
 	err = taskrepository.CreateTaskRepository(task)
 
 	if err != nil {
-		return fmt.Errorf("erro na criação da tarefa")
+		return err
 	}
 
 	return nil
@@ -36,15 +37,15 @@ func CreateTaskUseCase(task *models.Task) error {
 
 func isAValidTask(task *models.Task) error {
 	if task.Title == "" && task.Description == "" {
-		return fmt.Errorf("o body esta vazio ou mal formatado")
+		return errors.New("o body esta vazio ou mal formatado")
 	}
 
 	if task.Title == "" {
-		return fmt.Errorf("o titlo é requerido")
+		return errors.New("o titlo é requerido")
 	}
 
 	if task.Description == "" {
-		return fmt.Errorf("a descrição é requerida")
+		return errors.New("a descrição é requerida")
 	}
 
 	return nil
