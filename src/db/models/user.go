@@ -12,4 +12,5 @@ type User struct {
 	LastName string `json:"lastName"`
 	Email    string `json:"email" gorm:"primaryKey"`
 	Password string `json:"password"`
+	Task     []Task `gorm:"foreignKey:UserID"`
 }
