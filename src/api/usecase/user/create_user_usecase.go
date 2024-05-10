@@ -4,6 +4,8 @@ import (
 	"errors"
 	userrepository "goApi/api/repositories/user"
 	"goApi/db/models"
+
+	"gorm.io/gorm"
 )
 
 func CreateUserUseCase(user *models.User) error {
@@ -11,32 +13,32 @@ func CreateUserUseCase(user *models.User) error {
 	err := isAValidUser(user)
 
 	if err != nil {
-		return errors.New(err.Error())
+		return err
 	}
 
-	userExist, err := userrepository.GetUserByEmail(user.Email)
+	userAlreadyExist, err := userrepository.GetUserByEmail(user.Email)
 
-	if err != nil {
-		return errors.New(err.Error())
+	if !(errors.Is(err, gorm.ErrRecordNotFound)) && err != nil {
+		return err
 	}
 
-	if userExist != (&models.User{}) {
-		return errors.New("A tarefa ja existe")
+	if userAlreadyExist != nil {
+		return errors.New("a tarefa já existe")
 	}
 	return nil
 }
 
 func isAValidUser(user *models.User) error {
 	if user.Email == "" && user.Name == "" && user.LastName == "" {
-		return errors.New("O body esta vazio ou mal formatado")
+		return errors.New("o body esta vazio ou mal formatado")
 	}
 
 	if user.Email == "" {
-		return errors.New("O email é requerido")
+		return errors.New("o email é requerido")
 	}
 
 	if user.Name == "" {
-		return errors.New("O nome é requerida")
+		return errors.New("o nome é requerida")
 	}
 
 	return nil

@@ -1,14 +1,21 @@
 package userrepository
 
-import "goApi/db/models"
+import (
+	"fmt"
+	"goApi/db/models"
+)
 
 func GetUserByEmail(email string) (*models.User, error) {
-	var user *models.User
 
-	err := db.Where("email = ?", email).First(user).Error
+	var user models.User
+
+	err := db.Where("title = ?", email).First(&user).Error
+
+	fmt.Println("PASSEI")
 
 	if err != nil {
-		return user, err
+		return nil, err
 	}
-	return user, nil
+
+	return &user, nil
 }

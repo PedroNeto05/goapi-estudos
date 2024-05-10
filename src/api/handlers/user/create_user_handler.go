@@ -1,7 +1,6 @@
 package userhandler
 
 import (
-	"fmt"
 	userusecase "goApi/api/usecase/user"
 	"goApi/db/models"
 
@@ -11,7 +10,7 @@ import (
 func CreateUserHandler(c *fiber.Ctx) error {
 	var user *models.User
 
-	err := c.BodyParser(user)
+	err := c.BodyParser(&user)
 
 	if err != nil {
 		logger.Errorf("Erro ao fazer o parse das informações: %v", err)
@@ -20,7 +19,6 @@ func CreateUserHandler(c *fiber.Ctx) error {
 			"error": err.Error(),
 		})
 	}
-	fmt.Println("sdpkaspidhgaspidh")
 
 	err = userusecase.CreateUserUseCase(user)
 
