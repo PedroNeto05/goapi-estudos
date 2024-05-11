@@ -1,10 +1,14 @@
 package taskrepository
 
-import "goApi/db/models"
+import (
+	"goApi/db/models"
 
-func GetTasksRepository() []models.Task {
+	"github.com/google/uuid"
+)
+
+func GetTasksRepository(userID uuid.UUID) []models.Task {
 	tasks := []models.Task{}
-	db.Find(&tasks)
+	db.Where("user_id = ?", userID).Find(&tasks)
 
 	return tasks
 }
