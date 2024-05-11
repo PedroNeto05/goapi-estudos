@@ -14,7 +14,7 @@ func CreateUserUseCase(user *models.User) error {
 	if err != nil {
 		return err
 	}
-	userAlreadyExist, err := helpers.UserExist(user.Email)
+	userAlreadyExist, err := helpers.UserExistByEmail(user.Email)
 
 	if err != nil {
 		return err

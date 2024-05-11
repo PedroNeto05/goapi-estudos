@@ -13,5 +13,5 @@ var (
 func InitializeUserUseCase() {
 	logger = utils.GetLogger("user_usecase")
 	userrepository.InitializeUserRepository()
-	helpers.InitializeUserRepository()
+	helpers.InitializeHelpers()
 }
