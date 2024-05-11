@@ -7,8 +7,12 @@ import (
 	"github.com/google/uuid"
 )
 
-func GetTasksUseCase(userID uuid.UUID) []models.Task {
-	tasks := taskrepository.GetTasksRepository(userID)
+func GetTasksUseCase(userID uuid.UUID) ([]models.Task, error) {
+	tasks, err := taskrepository.GetTasksRepository(userID)
 
-	return tasks
+	if err != nil {
+		return nil, err
+	}
+
+	return tasks, nil
 }

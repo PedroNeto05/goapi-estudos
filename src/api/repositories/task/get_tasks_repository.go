@@ -6,9 +6,13 @@ import (
 	"github.com/google/uuid"
 )
 
-func GetTasksRepository(userID uuid.UUID) []models.Task {
+func GetTasksRepository(userID uuid.UUID) ([]models.Task, error) {
 	tasks := []models.Task{}
-	db.Where("user_id = ?", userID).Find(&tasks)
+	err := db.Where("user_id = ?", userID).Find(&tasks).Error
 
-	return tasks
+	if err != nil {
+		return nil, err
+	}
+
+	return tasks, nil
 }

@@ -19,7 +19,15 @@ func GetTasksHandler(c *fiber.Ctx) error {
 			"error": err.Error(),
 		})
 	}
-	tasks := taskusecase.GetTasksUseCase(userIdUUID)
+	tasks, err := taskusecase.GetTasksUseCase(userIdUUID)
+
+	if err != nil {
+		logger.Errorf("Erro ao buscar as tarefas: %v", err)
+		c.SendStatus(fiber.StatusInternalServerError)
+		return c.JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
 
 	return c.JSON(fiber.Map{"tasks": tasks})
 }
