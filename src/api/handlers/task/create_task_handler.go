@@ -5,17 +5,13 @@ import (
 	"goApi/db/models"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
 )
 
 func CreateTaskHandler(c *fiber.Ctx) error {
 	var taskRequest *models.Task
 
 	err := c.BodyParser(&taskRequest)
-
-	task := models.Task{
-		Title:       taskRequest.Title,
-		Description: taskRequest.Description,
-	}
 
 	if err != nil {
 		logger.Errorf("Erro ao fazer o parse das informações: %v", err)
@@ -24,6 +20,25 @@ func CreateTaskHandler(c *fiber.Ctx) error {
 			"error": err.Error(),
 		})
 	}
+
+	userID := c.Locals("userID").(string)
+
+	userIdUUID, err := uuid.Parse(userID)
+
+	if err != nil {
+		logger.Errorf("Erro ao fazer o parse das informações: %v", err)
+		c.SendStatus(fiber.StatusInternalServerError)
+		return c.JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	task := models.Task{
+		Title:       taskRequest.Title,
+		Description: taskRequest.Description,
+		UserID:      userIdUUID,
+	}
+
 	err = taskusecase.CreateTaskUseCase(&task)
 
 	if err != nil {
