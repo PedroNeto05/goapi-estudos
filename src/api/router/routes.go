@@ -3,6 +3,7 @@ package router
 import (
 	taskhandlers "goApi/api/handlers/task"
 	userhandler "goApi/api/handlers/user"
+	"goApi/api/middlewares"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -15,6 +16,8 @@ func initializeRoutes(router *fiber.App) {
 	{
 		// CREATE USER
 		users.Post("/", userhandler.CreateUserHandler)
+
+		// LOGIN USER
 		users.Post("/login", userhandler.LoginUserHandler)
 
 		// // SHOW USER
@@ -33,19 +36,19 @@ func initializeRoutes(router *fiber.App) {
 	taskhandlers.InitializeTaskHandler()
 	{
 		// CREATE TASKS
-		tasks.Post("/", taskhandlers.CreateTaskHandler)
+		tasks.Post("/", middlewares.UserAuthenticated, taskhandlers.CreateTaskHandler)
 
 		// SHOW TASKS
-		tasks.Get("/:taskId", taskhandlers.GetTaskHandler)
+		// tasks.Get("/:taskId", middlewares.UserAuthenticated,taskhandlers.GetTaskHandler)
 
 		// INDEX TASKS
-		tasks.Get("/", taskhandlers.GetTasksHandler)
+		tasks.Get("/", middlewares.UserAuthenticated, taskhandlers.GetTasksHandler)
 
 		// UPDATE TASKS
-		tasks.Put("/", taskhandlers.UpdateTaskHandler)
+		tasks.Put("/", middlewares.UserAuthenticated, taskhandlers.UpdateTaskHandler)
 
 		// DELETE TASKS
-		tasks.Delete("/", taskhandlers.DeleteTaskHandler)
+		tasks.Delete("/", middlewares.UserAuthenticated, taskhandlers.DeleteTaskHandler)
 	}
 
 }
