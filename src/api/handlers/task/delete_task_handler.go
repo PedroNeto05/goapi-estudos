@@ -1,7 +1,37 @@
 package taskhandlers
 
-import "github.com/gofiber/fiber/v2"
+import (
+	taskusecase "goApi/api/usecase/task"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/google/uuid"
+)
 
 func DeleteTaskHandler(c *fiber.Ctx) error {
-	return c.JSON(fiber.Map{"success": "DELETE"})
+
+	taskID := c.Params("taskId")
+
+	userID := c.Locals("userID").(string)
+
+	userIdUUID, err := uuid.Parse(userID)
+
+	if err != nil {
+		logger.Errorf("Erro ao deletar a terafa: %v", err)
+		c.SendStatus(fiber.StatusInternalServerError)
+		return c.JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	err = taskusecase.DeleteTaskUseCase(taskID, userIdUUID)
+
+	if err != nil {
+		logger.Errorf("Erro ao deletar a terafa: %v", err)
+		c.SendStatus(fiber.StatusInternalServerError)
+		return c.JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	return c.SendStatus(fiber.StatusOK)
 }
