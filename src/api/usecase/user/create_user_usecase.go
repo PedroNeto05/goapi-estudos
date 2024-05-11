@@ -2,10 +2,9 @@ package userusecase
 
 import (
 	"errors"
+	"goApi/api/helpers"
 	userrepository "goApi/api/repositories/user"
 	"goApi/db/models"
-
-	"gorm.io/gorm"
 )
 
 func CreateUserUseCase(user *models.User) error {
@@ -15,14 +14,14 @@ func CreateUserUseCase(user *models.User) error {
 	if err != nil {
 		return err
 	}
-	userAlreadyExist, err := userrepository.GetUserByEmail(user.Email)
+	userAlreadyExist, err := helpers.UserExist(user.Email)
 
-	if !(errors.Is(err, gorm.ErrRecordNotFound)) && err != nil {
+	if err != nil {
 		return err
 	}
 
-	if userAlreadyExist != nil {
-		return errors.New("o usuario já existe")
+	if userAlreadyExist {
+		return errors.New("usuario já existe")
 	}
 
 	userrepository.CreateUserRepository(user)
