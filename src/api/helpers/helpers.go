@@ -12,7 +12,7 @@ var (
 	db     *gorm.DB
 )
 
-func InitializeUserRepository() {
+func InitializeHelpers() {
 	logger = utils.GetLogger("helpers")
 	db, _ = mysql.InitializeMysql()
 }
