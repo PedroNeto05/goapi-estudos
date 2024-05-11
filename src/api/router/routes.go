@@ -15,6 +15,7 @@ func initializeRoutes(router *fiber.App) {
 	{
 		// CREATE USER
 		users.Post("/", userhandler.CreateUserHandler)
+		users.Post("/login", userhandler.LoginUserHandler)
 
 		// // SHOW USER
 		// users.Get("/:taskId")
