@@ -21,9 +21,8 @@ func CreateTaskHandler(c *fiber.Ctx) error {
 		logger.Errorf("Erro ao fazer o parse das informações: %v", err)
 		c.SendStatus(fiber.StatusInternalServerError)
 		return c.JSON(fiber.Map{
-			"error": err.Error(),
+			"error": err,
 		})
-
 	}
 	err = taskusecase.CreateTaskUseCase(&task)
 
@@ -31,7 +30,7 @@ func CreateTaskHandler(c *fiber.Ctx) error {
 		logger.Errorf("Erro na criação da tarefa: %v", err)
 		c.SendStatus(fiber.StatusBadRequest)
 		return c.JSON(fiber.Map{
-			"error": err.Error(),
+			"error": err,
 		})
 	}
 
