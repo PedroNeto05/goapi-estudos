@@ -28,7 +28,7 @@ func CreateUserHandler(c *fiber.Ctx) error {
 		logger.Errorf("Erro ao fazer o hash da senha: %v", err)
 		c.SendStatus(fiber.StatusInternalServerError)
 		return c.JSON(fiber.Map{
-			"error": err,
+			"error": err.Error(),
 		})
 	}
 
@@ -46,7 +46,7 @@ func CreateUserHandler(c *fiber.Ctx) error {
 		logger.Errorf("Erro na criação do usuario: %v", err)
 		c.SendStatus(fiber.StatusBadRequest)
 		return c.JSON(fiber.Map{
-			"error": err,
+			"error": err.Error(),
 		})
 	}
 
