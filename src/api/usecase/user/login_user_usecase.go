@@ -64,8 +64,6 @@ func isAValidLogin(login *models.LoginRequest) error {
 
 func createToken(user *models.User) (*string, error) {
 
-	// _ = godotenv.Load("../.env")
-
 	secretKey := os.Getenv("JWT_SECRET_KEY")
 
 	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
