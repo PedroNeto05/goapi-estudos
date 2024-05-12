@@ -7,10 +7,11 @@ import (
 	taskrepository "goApi/api/repositories/task"
 	"goApi/db/models"
 
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
-func CreateTaskUseCase(task *models.Task) error {
+func CreateTaskUseCase(task *models.Task, userID uuid.UUID) error {
 
 	err := helpers.IsAValidTask(task)
 
@@ -18,7 +19,7 @@ func CreateTaskUseCase(task *models.Task) error {
 		return err
 	}
 
-	taskAlreadyExist, err := taskrepository.GetTaskByTitleRepository(task.Title)
+	taskAlreadyExist, err := taskrepository.GetTaskByTitleRepository(task.Title, userID)
 
 	if !(errors.Is(err, gorm.ErrRecordNotFound)) && err != nil {
 		return err
