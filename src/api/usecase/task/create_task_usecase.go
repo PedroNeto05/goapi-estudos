@@ -3,6 +3,7 @@ package taskusecase
 import (
 	"errors"
 
+	"goApi/api/helpers"
 	taskrepository "goApi/api/repositories/task"
 	"goApi/db/models"
 
@@ -11,7 +12,7 @@ import (
 
 func CreateTaskUseCase(task *models.Task) error {
 
-	err := isAValidTask(task)
+	err := helpers.IsAValidTask(task)
 
 	if err != nil {
 		return err
