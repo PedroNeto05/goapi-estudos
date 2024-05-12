@@ -1,7 +1,6 @@
 package helpers
 
 import (
-	"fmt"
 	userrepository "goApi/api/repositories/user"
 	"goApi/db/models"
 
@@ -15,8 +14,6 @@ func UserExistByID(id uuid.UUID) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-
-	fmt.Println(userExist == (&models.User{}))
 
 	return !(userExist == (&models.User{})), nil
 }
