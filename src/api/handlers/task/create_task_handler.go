@@ -39,7 +39,7 @@ func CreateTaskHandler(c *fiber.Ctx) error {
 		UserID:      userIdUUID,
 	}
 
-	err = taskusecase.CreateTaskUseCase(&task)
+	err = taskusecase.CreateTaskUseCase(&task, userIdUUID)
 
 	if err != nil {
 		logger.Errorf("Erro na criação da tarefa: %v", err)
