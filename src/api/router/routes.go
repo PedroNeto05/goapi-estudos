@@ -45,7 +45,7 @@ func initializeRoutes(router *fiber.App) {
 		tasks.Get("/", middlewares.UserAuthenticated, taskhandlers.GetTasksHandler)
 
 		// UPDATE TASKS
-		tasks.Put("/", middlewares.UserAuthenticated, taskhandlers.UpdateTaskHandler)
+		tasks.Put("/:taskId", middlewares.UserAuthenticated, taskhandlers.UpdateTaskHandler)
 
 		// DELETE TASKS
 		tasks.Delete("/:taskId", middlewares.UserAuthenticated, taskhandlers.DeleteTaskHandler)
