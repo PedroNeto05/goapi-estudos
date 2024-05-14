@@ -21,7 +21,7 @@ func CreateUserUseCase(user *models.User) error {
 	}
 
 	if userAlreadyExist {
-		return errors.New("usuario já existe")
+		return errors.New("email já cadastrado")
 	}
 
 	userrepository.CreateUserRepository(user)
