@@ -17,7 +17,7 @@ func LoginUserHandler(c *fiber.Ctx) error {
 		logger.Errorf("Error parsing information: %v", err)
 		c.SendStatus(fiber.StatusInternalServerError)
 		return c.JSON(fiber.Map{
-			"error": err,
+			"error": err.Error(),
 		})
 	}
 
@@ -32,7 +32,7 @@ func LoginUserHandler(c *fiber.Ctx) error {
 		logger.Errorf("Erro ao fazer o login: %v", err)
 		c.SendStatus(fiber.StatusInternalServerError)
 		return c.JSON(fiber.Map{
-			"error": err,
+			"error": err.Error(),
 		})
 	}
 
