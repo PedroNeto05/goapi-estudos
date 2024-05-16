@@ -13,7 +13,7 @@ func GetTasksHandler(c *fiber.Ctx) error {
 	userIdUUID, err := uuid.Parse(userID)
 
 	if err != nil {
-		logger.Errorf("Erro ao fazer o parse das informações: %v", err)
+		logger.Errorf("Error parsing information: %v", err)
 		c.SendStatus(fiber.StatusInternalServerError)
 		return c.JSON(fiber.Map{
 			"error": err.Error(),
@@ -22,7 +22,7 @@ func GetTasksHandler(c *fiber.Ctx) error {
 	tasks, err := taskusecase.GetTasksUseCase(userIdUUID)
 
 	if err != nil {
-		logger.Errorf("Erro ao buscar as tarefas: %v", err)
+		logger.Errorf("Error fetching tasks: %v", err)
 		c.SendStatus(fiber.StatusInternalServerError)
 		return c.JSON(fiber.Map{
 			"error": err.Error(),

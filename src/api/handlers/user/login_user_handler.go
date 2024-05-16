@@ -14,7 +14,7 @@ func LoginUserHandler(c *fiber.Ctx) error {
 	err := c.BodyParser(&loginRequest)
 
 	if err != nil {
-		logger.Errorf("Erro ao fazer o parse das informações: %v", err)
+		logger.Errorf("Error parsing information: %v", err)
 		c.SendStatus(fiber.StatusInternalServerError)
 		return c.JSON(fiber.Map{
 			"error": err,

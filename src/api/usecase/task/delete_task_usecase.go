@@ -17,7 +17,7 @@ func DeleteTaskUseCase(taskID string, userID uuid.UUID) error {
 	}
 
 	if !userExist {
-		return errors.New("usuario nao existe")
+		return errors.New("the user does not exist")
 	}
 
 	err = taskrepository.DeleteTaskRepository(taskID, userID)

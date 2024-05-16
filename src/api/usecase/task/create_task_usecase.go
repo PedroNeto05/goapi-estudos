@@ -26,7 +26,7 @@ func CreateTaskUseCase(task *models.Task, userID uuid.UUID) error {
 	}
 
 	if taskAlreadyExist != nil {
-		return errors.New("a tarefa já existe")
+		return errors.New("the task already exists")
 	}
 
 	err = taskrepository.CreateTaskRepository(task)

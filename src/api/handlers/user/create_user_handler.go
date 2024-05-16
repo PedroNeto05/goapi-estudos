@@ -15,7 +15,7 @@ func CreateUserHandler(c *fiber.Ctx) error {
 	err := c.BodyParser(&userRequest)
 
 	if err != nil {
-		logger.Errorf("Erro ao fazer o parse das informações: %v", err)
+		logger.Errorf("Error parsing information: %v", err)
 		c.SendStatus(fiber.StatusInternalServerError)
 		return c.JSON(fiber.Map{
 			"error": err,
@@ -25,7 +25,7 @@ func CreateUserHandler(c *fiber.Ctx) error {
 	password, err := hashPassword(userRequest.Password)
 
 	if err != nil {
-		logger.Errorf("Erro ao fazer o hash da senha: %v", err)
+		logger.Errorf("Error hashing the password: %v", err)
 		c.SendStatus(fiber.StatusInternalServerError)
 		return c.JSON(fiber.Map{
 			"error": err.Error(),
@@ -43,7 +43,7 @@ func CreateUserHandler(c *fiber.Ctx) error {
 	err = userusecase.CreateUserUseCase(&user)
 
 	if err != nil {
-		logger.Errorf("Erro na criação do usuario: %v", err)
+		logger.Errorf("Error creating the user: %v", err)
 		c.SendStatus(fiber.StatusBadRequest)
 		return c.JSON(fiber.Map{
 			"error": err.Error(),

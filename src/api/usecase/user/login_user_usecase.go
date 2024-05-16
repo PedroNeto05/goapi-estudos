@@ -26,13 +26,13 @@ func LoginUserUseCase(login *models.LoginRequest) (*string, error) {
 	}
 
 	if userExist == nil {
-		return nil, errors.New("email ou senha errada")
+		return nil, errors.New("Invalid email or password. Please try again")
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(userExist.Password), []byte(login.Password))
 
 	if err != nil {
-		return nil, errors.New("email ou senha errada")
+		return nil, errors.New("Invalid email or password. Please try again")
 	}
 
 	token, err := createToken(userExist)
@@ -47,15 +47,15 @@ func LoginUserUseCase(login *models.LoginRequest) (*string, error) {
 func isAValidLogin(login *models.LoginRequest) error {
 
 	if login.Email == "" && login.Password == "" {
-		return errors.New("o body esta vazio ou mal formatado")
+		return errors.New("the body is empty or poorly formatted")
 	}
 
 	if login.Email == "" {
-		return errors.New("o email é requerido")
+		return errors.New("the email is required")
 	}
 
 	if login.Password == "" {
-		return errors.New("a senha é requerida")
+		return errors.New("the password is required")
 	}
 
 	return nil

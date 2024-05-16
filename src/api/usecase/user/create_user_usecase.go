@@ -21,7 +21,7 @@ func CreateUserUseCase(user *models.User) error {
 	}
 
 	if userAlreadyExist {
-		return errors.New("email já cadastrado")
+		return errors.New("email already registered")
 	}
 
 	userrepository.CreateUserRepository(user)
@@ -30,15 +30,15 @@ func CreateUserUseCase(user *models.User) error {
 
 func isAValidUser(user *models.User) error {
 	if user.Email == "" && user.FirstName == "" && user.LastName == "" {
-		return errors.New("o body esta vazio ou mal formatado")
+		return errors.New("the body is empty or poorly formatted")
 	}
 
 	if user.Email == "" {
-		return errors.New("o email é requerido")
+		return errors.New("the email is required")
 	}
 
 	if user.FirstName == "" {
-		return errors.New("o nome é requerida")
+		return errors.New("the name is required")
 	}
 
 	return nil

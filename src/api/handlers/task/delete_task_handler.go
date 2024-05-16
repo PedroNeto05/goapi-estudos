@@ -16,7 +16,7 @@ func DeleteTaskHandler(c *fiber.Ctx) error {
 	userIdUUID, err := uuid.Parse(userID)
 
 	if err != nil {
-		logger.Errorf("Erro ao deletar a terafa: %v", err)
+		logger.Errorf("Error deleting the task: %v", err)
 		c.SendStatus(fiber.StatusInternalServerError)
 		return c.JSON(fiber.Map{
 			"error": err.Error(),
@@ -26,7 +26,7 @@ func DeleteTaskHandler(c *fiber.Ctx) error {
 	err = taskusecase.DeleteTaskUseCase(taskID, userIdUUID)
 
 	if err != nil {
-		logger.Errorf("Erro ao deletar a terafa: %v", err)
+		logger.Errorf("Error deleting the task: %v", err)
 		c.SendStatus(fiber.StatusInternalServerError)
 		return c.JSON(fiber.Map{
 			"error": err.Error(),

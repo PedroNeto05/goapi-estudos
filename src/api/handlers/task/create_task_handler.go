@@ -14,7 +14,7 @@ func CreateTaskHandler(c *fiber.Ctx) error {
 	err := c.BodyParser(&taskRequest)
 
 	if err != nil {
-		logger.Errorf("Erro ao fazer o parse das informações: %v", err)
+		logger.Errorf("Error parsing information: %v", err)
 		c.SendStatus(fiber.StatusInternalServerError)
 		return c.JSON(fiber.Map{
 			"error": err.Error(),
@@ -26,7 +26,7 @@ func CreateTaskHandler(c *fiber.Ctx) error {
 	userIdUUID, err := uuid.Parse(userID)
 
 	if err != nil {
-		logger.Errorf("Erro ao fazer o parse das informações: %v", err)
+		logger.Errorf("Error parsing information: %v", err)
 		c.SendStatus(fiber.StatusInternalServerError)
 		return c.JSON(fiber.Map{
 			"error": err.Error(),
@@ -42,7 +42,7 @@ func CreateTaskHandler(c *fiber.Ctx) error {
 	err = taskusecase.CreateTaskUseCase(&task, userIdUUID)
 
 	if err != nil {
-		logger.Errorf("Erro na criação da tarefa: %v", err)
+		logger.Errorf("Error creating the task: %v", err)
 		c.SendStatus(fiber.StatusBadRequest)
 		return c.JSON(fiber.Map{
 			"error": err.Error(),
