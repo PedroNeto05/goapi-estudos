@@ -29,7 +29,7 @@ func CreateUserUseCase(user *models.User) error {
 }
 
 func isAValidUser(user *models.User) error {
-	if user.Email == "" && user.Name == "" && user.LastName == "" {
+	if user.Email == "" && user.FirstName == "" && user.LastName == "" {
 		return errors.New("o body esta vazio ou mal formatado")
 	}
 
@@ -37,7 +37,7 @@ func isAValidUser(user *models.User) error {
 		return errors.New("o email é requerido")
 	}
 
-	if user.Name == "" {
+	if user.FirstName == "" {
 		return errors.New("o nome é requerida")
 	}
 

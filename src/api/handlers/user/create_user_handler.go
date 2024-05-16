@@ -33,11 +33,11 @@ func CreateUserHandler(c *fiber.Ctx) error {
 	}
 
 	user := models.User{
-		ID:       uuid.New(),
-		Name:     userRequest.Name,
-		LastName: userRequest.LastName,
-		Email:    userRequest.Email,
-		Password: password,
+		ID:        uuid.New(),
+		FirstName: userRequest.FirstName,
+		LastName:  userRequest.LastName,
+		Email:     userRequest.Email,
+		Password:  password,
 	}
 
 	err = userusecase.CreateUserUseCase(&user)
